@@ -1,0 +1,27 @@
+{
+  "name": "sih25044-ai-powered-smart-farming-assistant",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/K4U5H1K-max/SIH25044-AI-Powered-Smart-Farming-Assistant.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/K4U5H1K-max/SIH25044-AI-Powered-Smart-Farming-Assistant/issues"
+  },
+  "homepage": "https://github.com/K4U5H1K-max/SIH25044-AI-Powered-Smart-Farming-Assistant#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "firebase-admin": "^13.5.0"
+  }
+}
