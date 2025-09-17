@@ -4,15 +4,29 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.languageBg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
   background-image: url('/bg_language_page.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  filter: blur(5px) brightness(0.7);
+  opacity: 0.95;
 }
 
 
 .languageCard {
-  background: rgba(20, 20, 30, 0.98);
+  background: rgba(30, 30, 40, 0.65);
   border-radius: 1.5rem;
   box-shadow: 0 8px 32px rgba(0,0,0,0.38);
   width: 100%;
@@ -22,8 +36,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  -webkit-backdrop-filter: blur(2px);
-  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  position: relative;
+  z-index: 1;
 }
 
 

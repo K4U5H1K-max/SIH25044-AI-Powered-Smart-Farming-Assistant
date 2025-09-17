@@ -18,14 +18,31 @@
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  background: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.75);
+  box-shadow: 0 4px 24px 0 rgba(19,200,19,0.12), 0 0 24px 2px rgba(19,200,19,0.10);
   border-radius: 1rem;
   box-shadow: 0 4px 24px rgba(0,0,0,0.15);
   width: 600px;
   min-height: 320px;
-  border: 4px solid #FF9933;
+  border: 4px solid #13c813;
   padding: 0;
   position: relative;
+  animation: pulsate-green 2.5s ease-in-out infinite;
+}
+
+@keyframes pulsate-green {
+  0% {
+    border-color: #13c813;
+    box-shadow: 0 0 0 0 rgba(19,200,19,0.15);
+  }
+  50% {
+    border-color: #38e838;
+    box-shadow: 0 0 16px 2px rgba(56,232,56,0.18);
+  }
+  100% {
+    border-color: #13c813;
+    box-shadow: 0 0 0 0 rgba(19,200,19,0.15);
+  }
 }
 .authFormSection {
   flex: 2;
@@ -47,7 +64,6 @@
   overflow: visible;
   border-radius: 0;
   background: transparent;
-  border: 4px solid #9107ED;
   box-shadow: 0 2px 8px rgba(145,7,237,0.08);
   display: flex;
   align-items: center;
@@ -69,18 +85,18 @@
   border-radius: 0.5rem;
   font-family: 'Michroma', sans-serif;
   font-weight: bold;
-  background: #9107ED;
-  color: #f5f5f5;
+  background: linear-gradient(90deg, #4285F4 20%, #34A853 80%);
+  color: #fafafa;
   margin-bottom: 1rem;
   border: none;
   cursor: pointer;
   font-size: 1.1rem;
   letter-spacing: 1px;
-  box-shadow: 0 2px 8px rgba(145,7,237,0.08);
+  box-shadow: 0 2px 8px rgba(66,133,244,0.08);
   transition: background 0.2s;
 }
 .submitBtnMichroma:active {
-  background: #6d049e;
+  background: linear-gradient(90deg, #3367d6 20%, #0f9d58 80%);
 }
 .authBg {
   min-height: 100vh;
@@ -88,8 +104,41 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  background: none;
+  background: radial-gradient(circle, #0e2d1a 0%, #3d943d 30%, #155e8b 55%, #0e544d 75%, #183c2a 100%);
+  background-size: 200% 200%;
+  animation: bg-gradient-flow-green 18s linear infinite;
+  overflow: hidden;
 }
+
+@keyframes bg-gradient-flow-green {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+.authBg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  background: url('data:image/svg+xml;utf8,<svg width="100%25" height="100%25" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg"><g opacity="0.7"><path d="M200 900 Q400 800 600 900 T1000 900 T1400 900 T1800 900" stroke="%2334e89e" stroke-width="3" fill="none"/><ellipse cx="400" cy="700" rx="40" ry="80" stroke="%2300ff99" stroke-width="2" fill="none"/><ellipse cx="1500" cy="800" rx="60" ry="30" stroke="%2300b894" stroke-width="2" fill="none"/><path d="M800 600 Q850 550 900 600 Q950 650 1000 600" stroke="%2300ffd0" stroke-width="2" fill="none"/><circle cx="1200" cy="400" r="30" stroke="%2300e6b8" stroke-width="2" fill="none"/><rect x="1600" y="200" width="80" height="20" rx="10" stroke="%2300ffcc" stroke-width="2" fill="none"/><path d="M300 300 Q350 250 400 300 Q450 350 500 300" stroke="%2300ffd0" stroke-width="2" fill="none"/><path d="M100 100 Q200 50 300 100" stroke="%2300ffd0" stroke-width="2" fill="none"/><g opacity="0.5"><rect x="900" y="100" width="120" height="40" rx="20" stroke="%2300ffcc" stroke-width="2" fill="none"/><circle cx="1700" cy="900" r="20" stroke="%2300e6b8" stroke-width="2" fill="none"/></g><g opacity="0.3"><path d="M0 1080 Q960 800 1920 1080" stroke="%2300ffd0" stroke-width="4" fill="none"/></g></g></svg>');
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: blur(2.5px);
+}
+
 .authBg::before {
   content: "";
   position: absolute;
@@ -97,12 +146,10 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('/background_auth.jpg');
-  background-size: cover;
-  background-position: center;
-  opacity: 0.6;
+  background: none;
   z-index: 0;
 }
+
 
 .authCard {
   position: relative;
@@ -142,15 +189,22 @@
   letter-spacing: 1px;
 }
 
+
 .inputField {
   width: 100%;
   padding: 0.75rem 1rem;
   border-radius: 0.5rem;
-  border: 2px solid #FF9933;
+  border: 2px solid #138808; /* Green border */
   margin-bottom: 1rem;
   font-size: 1rem;
   color: #000;
   background: #fff;
+  transition: border-color 0.2s;
+}
+
+.inputField:focus {
+  border-color: #0b6605; /* Darker green on focus */
+  outline: none;
 }
 
 .inputField[type="password"] {
@@ -174,11 +228,19 @@
   padding: 0.75rem;
   border-radius: 0.5rem;
   font-weight: bold;
-  background: linear-gradient(90deg, #4285F4 60%, #34A853 100%);
+  background: linear-gradient(90deg, #4285F4 20%, #34A853 80%);
   color: #fafafa;
   margin-bottom: 0.5rem;
   border: none;
   cursor: pointer;
+  font-family: 'Michroma', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  box-shadow: 0 2px 8px rgba(66,133,244,0.08);
+  transition: background 0.2s;
+}
+.googleBtn:active {
+  background: linear-gradient(90deg, #3367d6 20%, #0f9d58 80%);
 }
 
 .switchBtn {
