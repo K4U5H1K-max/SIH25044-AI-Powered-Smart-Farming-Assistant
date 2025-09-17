@@ -1,6 +1,9 @@
+
 import React, { useState } from 'react';
+import styles from './Login.module.css';
 import { auth, googleProvider } from '../firebase';
 import { signInWithEmailAndPassword, signInWithPopup, createUserWithEmailAndPassword } from 'firebase/auth';
+import Head from 'next/head';
 
 export default function Login({ onLogin }: { onLogin: () => void }) {
   const [email, setEmail] = useState('');
@@ -33,37 +36,53 @@ export default function Login({ onLogin }: { onLogin: () => void }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-700">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">{isSignUp ? 'Sign Up' : 'Login'}</h2>
-        <form onSubmit={handleEmailAuth} className="space-y-4">
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            className="w-full px-4 py-2 border rounded"
-            required
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            className="w-full px-4 py-2 border rounded"
-            required
-          />
-          <button type="submit" className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">{isSignUp ? 'Sign Up' : 'Login'}</button>
-        </form>
-        <button onClick={handleGoogleLogin} className="w-full mt-4 bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Sign in with Google</button>
-        <button
-          onClick={() => { setIsSignUp(!isSignUp); setError(''); }}
-          className="w-full mt-2 text-sm text-blue-600 hover:underline"
-        >
-          {isSignUp ? 'Already have an account? Login' : "Don't have an account? Sign Up"}
-        </button>
-        {error && <p className="text-red-500 mt-2 text-center">{error}</p>}
+    <>
+      <Head>
+        <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet" />
+      </Head>
+      <div className={styles.authBg}>
+        <div className={styles.authCardHorizontal}>
+          <div className={styles.authFormSection}>
+            <h2 className={styles.loginTitleMichroma}>Login</h2>
+            <form onSubmit={handleEmailAuth}>
+              <input
+                type="email"
+                placeholder="Username"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                className={styles.inputField}
+                required
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                className={styles.inputField}
+                required
+              />
+              <button type="submit" className={styles.submitBtnMichroma}>
+                {isSignUp ? 'Sign Up' : 'Login'}
+              </button>
+            </form>
+            <button onClick={handleGoogleLogin} className={styles.googleBtn}>
+              Sign in with Google
+            </button>
+            <button
+              onClick={() => { setIsSignUp(!isSignUp); setError(''); }}
+              className={styles.switchBtn}
+            >
+              {isSignUp ? 'Already have an account? Login' : "Don't have an account? Sign Up"}
+            </button>
+            {error && <p className={styles.errorMsg}>{error}</p>}
+          </div>
+        </div>
+        <div className={styles.logoFixedBottomLeft}>
+          <div className={styles.logoBottomBox}>
+            <img src="/logo.jpg" alt="Logo" className={styles.logoBottomImg} />
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

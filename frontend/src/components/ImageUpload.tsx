@@ -20,6 +20,8 @@ export default function ImageUpload({ onUpload }: { onUpload: (file: File) => vo
         ref={fileInputRef}
         onChange={handleFileChange}
         className="hidden"
+        title="Upload soil image"
+        placeholder="Choose an image file"
       />
       <button
         onClick={() => fileInputRef.current?.click()}

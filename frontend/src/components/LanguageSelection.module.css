@@ -1,0 +1,71 @@
+
+.languageBg {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('/bg_language_page.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+.languageCard {
+  background: rgba(20, 20, 30, 0.98);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.38);
+  width: 100%;
+  max-width: 540px;
+  padding: 4rem 2.8rem;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+
+
+.languageTitle {
+  color: #fff;
+  font-size: 2.3rem;
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 2.2rem;
+  letter-spacing: 1.5px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+
+.languageGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+
+.languageBtn {
+  background: rgba(255,255,255,0.85);
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #232a3a 0%, #232a3a 100%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 0.8rem;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  outline: none;
+}
+
+.languageBtn:hover {
+  background: linear-gradient(135deg, #232a3a 0%, #232a3a 100%);
+  color: #fff;
+  border-color: none;
+  text-shadow: 0 0 8px #fff, 0 0 16px #fff;
+}
