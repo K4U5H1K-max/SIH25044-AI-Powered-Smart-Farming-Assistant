@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import styles from './LanguageSelection.module.css';
 
 const languages = [
   { code: 'en', label: 'English' },
@@ -11,16 +12,28 @@ const languages = [
 ];
 
 export default function LanguageSelection({ onSelect }: { onSelect: (lang: string) => void }) {
+  const [bgUrl, setBgUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Unsplash random farming image
+    const unsplashUrl =
+      'https://source.unsplash.com/random/1200x800/?farm,agriculture,field,crop,farmer';
+    setBgUrl(unsplashUrl + '&' + Math.random()); // Add random param to force reload
+  }, []);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 to-blue-200">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Select Language</h2>
-        <div className="grid grid-cols-2 gap-4">
+    <div
+      className={`${styles.languageBg} ${bgUrl ? styles.languageBgWithImage : ''}`}
+      data-bg-url={bgUrl || ''}
+    >
+      <div className={styles.languageCard}>
+        <h2 className={styles.languageTitle}>Select Language</h2>
+        <div className={styles.languageGrid}>
           {languages.map(lang => (
             <button
               key={lang.code}
               onClick={() => onSelect(lang.code)}
-              className="bg-gradient-to-r from-green-400 to-blue-500 text-white py-2 rounded hover:from-green-500 hover:to-blue-600"
+              className={styles.languageBtn}
             >
               {lang.label}
             </button>

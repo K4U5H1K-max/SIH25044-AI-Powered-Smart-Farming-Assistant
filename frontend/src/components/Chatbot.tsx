@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import styles from './Dashboard.module.css';
 
 interface Message {
   sender: 'user' | 'bot';
@@ -9,10 +10,18 @@ export default function Chatbot({ language }: { language: string }) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const recognitionRef = useRef<any>(null);
-  const synth = typeof window !== 'undefined' ? window.speechSynthesis : null;
+  const [synth, setSynth] = useState<any>(null);
+
+  // Ensure synth is only set on client
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setSynth(window.speechSynthesis);
+    }
+  }, []);
 
   // Speech-to-Text
   const handleSpeechInput = () => {
+    if (typeof window === 'undefined') return;
     if (!('webkitSpeechRecognition' in window)) {
       alert('Speech recognition not supported');
       return;
@@ -29,7 +38,7 @@ export default function Chatbot({ language }: { language: string }) {
   // Text-to-Speech
   const speak = (text: string) => {
     if (!synth) return;
-    const utter = new SpeechSynthesisUtterance(text);
+    const utter = new window.SpeechSynthesisUtterance(text);
     utter.lang = language;
     synth.speak(utter);
   };
@@ -52,25 +61,27 @@ export default function Chatbot({ language }: { language: string }) {
   };
 
   return (
-    <div className="bg-white rounded shadow p-4 flex flex-col h-96">
-      <h3 className="text-lg font-bold mb-2">Chatbot</h3>
-      <div className="flex-1 overflow-y-auto mb-2">
+    <div className={`${styles.chatbotContainer} ${styles.chatbotContainerCustom}`}>
+      <div className={styles.chatbotBackground} />
+      <div className={`${styles.chatbotMessages} ${styles.chatbotMessagesCustom}`}>
         {messages.map((msg, i) => (
-          <div key={i} className={`mb-1 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}>
-            <span className={`inline-block px-3 py-1 rounded ${msg.sender === 'user' ? 'bg-green-200' : 'bg-blue-200'}`}>{msg.text}</span>
+          <div key={i} className={`${styles.chatbotMessageRow} ${msg.sender === 'user' ? styles.user : ''}`}>
+            <span className={`${styles.chatbotMessage} ${msg.sender === 'user' ? styles.user : ''}`}>{msg.text}</span>
           </div>
         ))}
       </div>
-      <div className="flex gap-2">
+      <div className={`${styles.chatInputBar} ${styles.chatInputBarCustom}`}>
+        <img src="/Gallary.png" alt="Gallery" className={styles.inputIcon} />
         <input
           type="text"
           value={input}
           onChange={e => setInput(e.target.value)}
-          className="flex-1 border rounded px-2 py-1"
-          placeholder="Type or use mic..."
+          className={styles.textInput}
+          placeholder="Enter Text....."
+          onKeyDown={e => { if (e.key === 'Enter') handleSend(); }}
         />
-        <button onClick={handleSpeechInput} className="bg-gray-300 px-2 rounded">🎤</button>
-        <button onClick={handleSend} className="bg-green-600 text-white px-4 py-1 rounded">Send</button>
+          <button className={styles.sendBtn} onClick={handleSend}>Send</button>
+          <img src="/Mic.png" alt="Mic" className={styles.micIcon} onClick={handleSpeechInput} />
       </div>
     </div>
   );
