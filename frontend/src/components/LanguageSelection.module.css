@@ -1,4 +1,5 @@
 
+
 .languageBg {
   min-height: 100vh;
   display: flex;
@@ -6,6 +7,12 @@
   justify-content: center;
   position: relative;
   overflow: hidden;
+  animation: bgFadeIn 1.2s cubic-bezier(0.4,0,0.2,1);
+}
+
+@keyframes bgFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .languageBg::before {
@@ -16,72 +23,127 @@
   width: 100vw;
   height: 100vh;
   z-index: 0;
-  background-image: url('/bg_language_page.jpg');
+  background-image: url('/bg_language_page.jpg'), linear-gradient(120deg, #a8ff78 0%, #78ffd6 100%);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: blur(5px) brightness(0.7);
-  opacity: 0.95;
+  filter: brightness(0.7) saturate(1.1);
+  opacity: 0.93;
+  animation: bgPulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes bgPulse {
+  0% { filter: brightness(0.7) saturate(1.1); }
+  100% { filter: brightness(0.8) saturate(1.2); }
 }
 
 
+
+/* --- Language selection card styled like login page, right-to-center fade --- */
 .languageCard {
-  background: rgba(30, 30, 40, 0.65);
-  border-radius: 1.5rem;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.38);
-  width: 100%;
-  max-width: 540px;
-  padding: 4rem 2.8rem;
-  border: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 80vw;
+  min-width: 400px;
+  max-width: 900px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  position: relative;
-  z-index: 1;
+  align-items: flex-end;
+  background: rgba(20, 22, 30, 0.92);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.38);
+  border-radius: 0;
+  border: none;
+  padding: 5.5rem 4.5rem 3.5rem 4.5rem;
+  margin: 0;
+  animation: cardRightToCenter 1.1s cubic-bezier(0.4,0,0.2,1);
+  z-index: 2;
+  overflow: visible;
+  -webkit-mask-image: linear-gradient(to left, #000 98%, transparent 100%);
+  mask-image: linear-gradient(to left, #000 70%, transparent 100%);
 }
+
+@keyframes cardRightToCenter {
+  from { opacity: 0; transform: translateX(120px) scale(0.98); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes cardFloatIn {
+  from { opacity: 0; transform: translateY(40px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+
 
 
 .languageTitle {
   color: #fff;
-  font-size: 2.3rem;
+  font-size: 2.5rem;
   font-weight: 900;
   text-align: center;
   margin-bottom: 2.2rem;
-  letter-spacing: 1.5px;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  letter-spacing: 2px;
+  text-shadow: 0 2px 16px rgba(120,255,214,0.12), 0 2px 8px rgba(0,0,0,0.08);
+  background: linear-gradient(90deg, #a8ff78 0%, #78ffd6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  align-self: center;
+  justify-self: center;
 }
 
 
 .languageGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+  column-gap: 0.03rem;
+  row-gap: 0.6rem;
   width: 100%;
+  z-index: 1;
 }
 
 
 .languageBtn {
-  background: rgba(255,255,255,0.85);
-  color: #fff;
+  background: linear-gradient(120deg, #a8ff78 0%, #78ffd6 100%);
+  color: #232a3a;
   font-size: 1.5rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #232a3a 0%, #232a3a 100%);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: 0.8rem;
-  border: none;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  border-radius: 1.1rem;
+  border: 2px solid transparent;
+  box-shadow: 0 2px 16px rgba(120,255,214,0.13), 0 2px 8px rgba(0,0,0,0.18);
   cursor: pointer;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  transition: transform 0.18s cubic-bezier(0.4,0,0.2,1), box-shadow 0.18s, background 0.18s, color 0.18s, border 0.18s;
   outline: none;
+  padding: 0.82rem 0;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  opacity: 0;
+  animation: btnFadeIn 1.1s cubic-bezier(0.4,0,0.2,1) forwards;
+  width: 56%;
+  margin: 0 auto;
 }
 
-.languageBtn:hover {
-  background: linear-gradient(135deg, #232a3a 0%, #232a3a 100%);
+@keyframes btnFadeIn {
+  from { opacity: 0; transform: translateY(30px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.languageBtn:hover, .languageBtn:focus {
+  background: linear-gradient(120deg, #78ffd6 0%, #a8ff78 100%);
   color: #fff;
-  border-color: none;
+  transform: scale(1.07) translateY(-2px);
+  box-shadow: 0 4px 24px 0 rgba(120,255,214,0.22), 0 2px 8px rgba(0,0,0,0.18);
+  filter: brightness(1.08) saturate(1.2);
+  border: 2px solid #fff;
+}
+
+.languageBtn:hover span, .languageBtn:focus span {
   text-shadow: 0 0 8px #fff, 0 0 16px #fff;
+}
+
+.languageBtn:active {
+  transform: scale(0.97);
+  filter: brightness(0.98);
 }

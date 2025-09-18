@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styles from './LanguageSelection.module.css';
+import signOutStyles from './SignOutTopLeft.module.css';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase';
 
 const languages = [
   { code: 'en', label: 'English' },
@@ -26,6 +29,12 @@ export default function LanguageSelection({ onSelect }: { onSelect: (lang: strin
       className={`${styles.languageBg} ${bgUrl ? styles.languageBgWithImage : ''}`}
       data-bg-url={bgUrl || ''}
     >
+      <button
+        className={signOutStyles.signOutTopLeft}
+        onClick={() => signOut(auth)}
+      >
+        Sign Out
+      </button>
       <div className={styles.languageCard}>
         <h2 className={styles.languageTitle}>Select Language</h2>
         <div className={styles.languageGrid}>
@@ -35,7 +44,7 @@ export default function LanguageSelection({ onSelect }: { onSelect: (lang: strin
               onClick={() => onSelect(lang.code)}
               className={styles.languageBtn}
             >
-              {lang.label}
+              <span>{lang.label}</span>
             </button>
           ))}
         </div>
