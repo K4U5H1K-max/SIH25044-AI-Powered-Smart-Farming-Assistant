@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import styles from './Login.module.css';
 import { auth, googleProvider } from '../firebase';
@@ -6,11 +5,35 @@ import { signInWithEmailAndPassword, signInWithPopup, createUserWithEmailAndPass
 import Head from 'next/head';
 
 export default function Login({ onLogin }: { onLogin: () => void }) {
+  function showPopup(msg: string) {
+    const popup = document.createElement('div');
+    popup.textContent = msg;
+    popup.style.position = 'fixed';
+    popup.style.top = '32px';
+    popup.style.left = '50%';
+    popup.style.transform = 'translateX(-50%)';
+    popup.style.background = 'rgba(30,40,30,0.98)';
+    popup.style.color = '#fff';
+    popup.style.padding = '1.1rem 2.2rem';
+    popup.style.borderRadius = '1rem';
+    popup.style.fontSize = '1.2rem';
+    popup.style.fontWeight = 'bold';
+    popup.style.boxShadow = '0 4px 24px rgba(0,0,0,0.18)';
+    popup.style.zIndex = '9999';
+    popup.style.opacity = '0';
+    popup.style.transition = 'opacity 0.3s';
+    document.body.appendChild(popup);
+    setTimeout(() => { popup.style.opacity = '1'; }, 10);
+    setTimeout(() => {
+      popup.style.opacity = '0';
+      setTimeout(() => { document.body.removeChild(popup); }, 400);
+    }, 2600);
+  }
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
-
 
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,7 +45,12 @@ export default function Login({ onLogin }: { onLogin: () => void }) {
       }
       onLogin();
     } catch (err: any) {
-      setError(err.message);
+      if (err.code === 'auth/invalid-credential') {
+        setError('');
+        showPopup('Invalid credentials. Please check your username and password.');
+      } else {
+        setError(err.message);
+      }
     }
   };
 
@@ -31,7 +59,12 @@ export default function Login({ onLogin }: { onLogin: () => void }) {
       await signInWithPopup(auth, googleProvider);
       onLogin();
     } catch (err: any) {
-      setError(err.message);
+      if (err.code === 'auth/invalid-credential') {
+        setError('');
+        showPopup('Invalid credentials. Please check your username and password.');
+      } else {
+        setError(err.message);
+      }
     }
   };
 
@@ -47,7 +80,7 @@ export default function Login({ onLogin }: { onLogin: () => void }) {
             <form onSubmit={handleEmailAuth}>
               <input
                 type="email"
-                placeholder="Username"
+                placeholder="Email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 className={styles.inputField}
@@ -61,13 +94,15 @@ export default function Login({ onLogin }: { onLogin: () => void }) {
                 className={styles.inputField}
                 required
               />
-              <button type="submit" className={styles.submitBtnMichroma}>
-                {isSignUp ? 'Sign Up' : 'Login'}
-              </button>
+              <div style={{ display: 'flex', gap: '4%', marginBottom: '1.2rem', justifyContent: 'flex-start' }}>
+                <button type="submit" className={styles.submitBtnMichroma}>
+                  {isSignUp ? 'Sign Up' : 'Login'}
+                </button>
+                <button type="button" onClick={handleGoogleLogin} className={styles.googleBtn}>
+                  Sign in with Google
+                </button>
+              </div>
             </form>
-            <button onClick={handleGoogleLogin} className={styles.googleBtn}>
-              Sign in with Google
-            </button>
             <button
               onClick={() => { setIsSignUp(!isSignUp); setError(''); }}
               className={styles.switchBtn}
